@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Tekkify Auth'),
+    'name' => env('APP_NAME', 'TekkifyAuth'),
 
     /*
     |--------------------------------------------------------------------------
