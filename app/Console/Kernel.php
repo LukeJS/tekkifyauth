@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\DeleteExpiredVerificationCodes;
+use App\Console\Commands\DeleteExpiredVerificationCodesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(DeleteExpiredVerificationCodes::class)
+        $schedule->command(DeleteExpiredVerificationCodesCommand::class)
                  ->everyMinute();
     }
 

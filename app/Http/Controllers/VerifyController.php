@@ -47,6 +47,8 @@ class VerifyController extends Controller
 
     public function verify(Request $request)
     {
+        sleep(20);
+
         if ($request->input('token') !== $this->verificationSecret) {
             return response('Forbidden', 403);
         }
