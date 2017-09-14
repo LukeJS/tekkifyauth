@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'mc_uuid', 'mc_last_username', 'mc_verified',
+        'username', 'email', 'password',
     ];
 
     /**
@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function minecraftAccount()
+    {
+        return $this->hasOne('App\MinecraftAccount');
+    }
+
+    public function verificationCode()
+    {
+        return $this->hasOne('App\VerificationCode');
+    }
 }

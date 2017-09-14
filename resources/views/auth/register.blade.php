@@ -3,7 +3,7 @@
 @section('content')
     @include('common.errors')
 
-    <form method="POST" action="{{ route('register') }}">
+    <form action="{{ route('register') }}" method="POST">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="registerUsername">Username</label>
@@ -17,6 +17,10 @@
         <div class="form-group">
             <label for="registerPassword">Password</label>
             <input type="password" name="password" class="form-control" id="registerPassword" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="registerPasswordConfirmation">Confirm Password</label>
+            <input type="password" name="password_confirmation" class="form-control" id="registerPasswordConfirmation" placeholder="Confirm Password">
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
