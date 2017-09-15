@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\VerificationCode;
 use Illuminate\Console\Command;
 
-class DeleteExpiredVerificationCodes extends Command
+class DeleteExpiredVerificationCodesCommand extends Command
 {
     /**
      * The name and signature of the console command.
