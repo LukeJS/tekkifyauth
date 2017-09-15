@@ -26,6 +26,7 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/verify', 'VerifyController@showVerifyPage')->middleware('auth');
+Route::post('/unlink', 'VerifyController@unlink')->middleware('auth');
 
 Route::get('/users', function () {
     return User::with('minecraftAccount')->get();

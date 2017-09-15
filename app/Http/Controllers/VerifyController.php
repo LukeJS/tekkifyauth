@@ -45,10 +45,9 @@ class VerifyController extends Controller
         return view('verify.index', compact('code'));
     }
 
+    // api call
     public function verify(Request $request)
     {
-        sleep(20);
-
         if ($request->input('token') !== $this->verificationSecret) {
             return response('Forbidden', 403);
         }
@@ -73,21 +72,30 @@ class VerifyController extends Controller
 
         $user = $verificationCode->user;
 
-        $mc = $user->minecraftAccount;
-
-        if ($mc != null) {
-            $mc->uuid = $mcUuid;
-            $mc->last_username = $mcUsername;
-            $mc->save();
-        } else {
-            $user->minecraftAccount()->create([
-                'uuid' => $mcUuid,
-                'last_username' => $mcUsername,
-            ]);
+        if ($user->minecraftAccount != null) {
+            return response('User already has a verified Minecraft account', 400);
         }
+
+        $user->minecraftAccount()->create([
+            'uuid' => $mcUuid,
+            'last_username' => $mcUsername,
+        ]);
 
         // Return the username of the user the Minecraft account was verified with.
         return response($user->username, 200);
+    }
+
+    public function unlink(Request $request)
+    {
+        $mc = $user->minecraftAccount;
+
+        if ($mc == null) {
+            return redirect('/'); // go back with error
+        }
+
+        $mc->delete();
+
+        return redirect('/verify'); // with success messsage
     }
 
     // Unused as this isn't actually neccesary for verification, but may be useful for updating username when it's changed.
