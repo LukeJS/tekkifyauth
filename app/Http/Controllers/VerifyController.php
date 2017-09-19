@@ -48,26 +48,18 @@ class VerifyController extends Controller
     // api call
     public function verify(Request $request)
     {
-        if ($request->input('token') !== $this->verificationSecret) {
-            return response('Forbidden', 403);
-        }
+        $request->validate([
+            'token' => 'same:' . $this->verificationSecret,
+            'code' => 'required|size:' . $this->codeLength . '|exists:verification_codes',
+            'mc_uuid' => 'required|size:36',
+            'mc_username' => 'required|alpha_dash|between:1,16',
+        ]);
 
         $code = $request->input('code');
         $mcUuid = $request->input('mc_uuid');
         $mcUsername = $request->input('mc_username');
 
-        if (strlen($code) != $this->codeLength) {
-            return response('Invalid verification code', 400);
-        }
-
-        // VerificationCode::create(['code' => '1234567890', 'user_id' => 1]);
-
         $verificationCode = VerificationCode::find($code);
-
-        if ($verificationCode == null) {
-            return response('Invalid verification code', 400);
-        }
-
         $verificationCode->delete();
 
         $user = $verificationCode->user;
